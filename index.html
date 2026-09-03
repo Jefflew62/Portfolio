@@ -708,7 +708,7 @@
             <h2 class="section-title">Let's Connect</h2>
             <div class="section-subtitle">Ready to bring your robotics vision to life? Let's discuss your project.</div>
             <div class="contact-form">
-                <form id="contactForm">
+                <form id="contactForm" action="https://script.google.com/macros/s/AKfycbxf8sB4FOFRWeFICAaTXyUvlGhndLG9z_5i4XYi3-GX_aLajjCXDWUrdHbKjAMr_AEd/exec" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -716,6 +716,10 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">Organization</label>
+                        <input type="text" id="organization" name="organization" placeholder="e.g., Company or School Name">
                     </div>
                     <div class="form-group">
                         <label for="project">Project Type</label>
@@ -767,10 +771,21 @@
         });
 
         // Form
-        document.getElementById('contactForm').addEventListener('submit', e => {
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert("Thank you for your message! I'll get back to you soon.");
-            e.target.reset();
+            const form = e.target;
+            const data = new FormData(form);
+            try {
+                await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    mode: 'no-cors'
+                });
+                alert("Thank you for your message! I'll get back to you soon.");
+                form.reset();
+            } catch (error) {
+                alert("Oops, something went wrong. Please try emailing me directly.");
+            }
         });
 
         // Modal
